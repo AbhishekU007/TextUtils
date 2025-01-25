@@ -53,10 +53,12 @@ export default function TextForm(props) {
             <h2>Your test summary</h2>
             <p>{text.split(" ").length} words</p>
             <p>{text.length} characters</p>
-            <p>{0.008 * text.split(" ").length} Minutes Read</p>
+            <p>{Math.round(0.008 * text.split(" ").length)} Minutes Read</p>
 
             <h3>Preview</h3>
-            <p>{text.length > 0 ? text : "Enter something to preview it here.."}</p>
+            <p>{text.length > 0 ? <span dangerouslySetInnerHTML={{ __html: text.replace(/\n/g, '<br/>').replace(/\n\n/g, '<p></p>') }} /> : "Enter something to preview it here.."}</p>
+
+
         </div>
         </>
   )
