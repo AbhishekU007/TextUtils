@@ -9,7 +9,20 @@ import React, {useState} from 'react';
 function App() {
   const [mode, setMode] = useState('light'); //weather darkmode is enabled or not
   const [alert, setAlert] = useState(null);
+///////////////////////////////////////
+  const [currentPage, setCurrentPage] = useState("home");
 
+  const renderPage = () => {
+    switch (currentPage) {
+      case "home":
+        return <TextForm showAlert={showAlert} heading="Enter text to be analysed" mode={mode}/>;
+      case "about":
+        return <About/>;
+      default:
+        return <TextForm showAlert={showAlert} heading="Enter text to be analysed" mode={mode}/>;
+    }
+  };
+///////////////////////////////
   const showAlert = (message, type)=>{
     setAlert({
       msg: message,
@@ -23,7 +36,7 @@ function App() {
   const toggleMode = () =>{
     if(mode === 'light'){
       setMode('dark');
-      document.body.style.backgroundColor = '#042743';
+      document.body.style.backgroundColor = '#212121';
       showAlert("Dark mode enabled", "success")
     }
     else{
@@ -32,15 +45,29 @@ function App() {
       showAlert("Light mode enabled", "success")
     }
   }
+
+  // const router = createBrowserRouter([
+  //   {
+  //     path: "/",
+  //     element: <TextForm showAlert={showAlert} heading="Enter text to be analysed" mode={mode}/>
+  //   },
+  //   {
+  //     path: "/about",
+  //     element: <About/>
+  //   },
+  // ])
+
   return (
     <>
     
-    <Navbar title="TextUtils" mode={mode} toggleMode={toggleMode}/>
+    <Navbar title="TextUtils" aboutText="About Us" mode={mode} toggleMode={toggleMode} setCurrentPage={setCurrentPage}/>
     <Alert alert={alert}/>
 
-    <div className="container">
+    {renderPage()}
+
+    {/* <div className="container">
       <TextForm showAlert={showAlert} heading="Enter text to be analysed" mode={mode}/>
-    </div>
+    </div> */}
       
     </>
   );
